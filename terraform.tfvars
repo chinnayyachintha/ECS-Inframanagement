@@ -1,7 +1,7 @@
 # AWS Region
 aws_region = "ca-central-1"
 
-# VPC Configuration Variables
+# VPC Module Configuration Variables
 vpc_cidr_block = "10.0.0.0/16"
 
 public_subnets = {
@@ -20,3 +20,7 @@ common_tags = {
   Owner       = "Chinnayya Chintha"
   Project     = "PopStream-Pricing"
 }
+
+# Security Groups Module Configuration Variables
+public_sg_name  = "Public-SG"
+private_sg_name = "Private-SG"

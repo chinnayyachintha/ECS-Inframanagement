@@ -22,3 +22,13 @@ variable "common_tags" {
   type        = map(string)
 }
 
+# Security Groups Module Variables
+variable "public_sg_name" {
+  description = "Name for the public security group"
+  type        = string
+}
+
+variable "private_sg_name" {
+  description = "Name for the private security group"
+  type        = string
+}

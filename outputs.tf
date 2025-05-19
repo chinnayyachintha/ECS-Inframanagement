@@ -34,3 +34,12 @@ output "nat_eip_id" {
 output "nat_gateway_eip" {
   value = module.vpc.nat_gateway_eip
 }   
+
+# Security Groups Module Outputs
+output "public_security_group_id" {
+  value = module.security_groups.public_security_group_id
+}
+
+output "private_security_group_id" {
+  value = module.security_groups.private_security_group_id
+}
