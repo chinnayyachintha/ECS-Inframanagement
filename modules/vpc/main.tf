@@ -1,3 +1,6 @@
+# Fetch the available AZs in the region
+data "aws_availability_zones" "available" {}
+
 # Create the main VPC with specified CIDR block and instance tenancy
 resource "aws_vpc" "main" {
   cidr_block       = var.vpc_cidr_block
@@ -12,6 +15,12 @@ resource "aws_vpc" "main" {
   )
 }
 
+# Create a local variable to hold the keys of the public and private subnets
+# This is used to determine the availability zone for each subnet
+locals {
+  pub_subnet_keys = keys(var.public_subnets)
+  pvt_subnet_keys = keys(var.private_subnets)
+}
 
 # Create public subnets from the var.public_subnets map
 resource "aws_subnet" "public_subnets" {
@@ -19,6 +28,7 @@ resource "aws_subnet" "public_subnets" {
 
   vpc_id                  = aws_vpc.main.id
   cidr_block              = each.value                  # CIDR block for each public subnet
+  availability_zone      = element(data.aws_availability_zones.available.names, index(local.pub_subnet_keys, each.key)) # Assign AZ based on map key
   map_public_ip_on_launch = true                         # Automatically assign public IP to instances
 
   tags = merge(
@@ -33,6 +43,9 @@ resource "aws_subnet" "private_subnets" {
 
   vpc_id     = aws_vpc.main.id
   cidr_block = each.value
+  availability_zone      = element(data.aws_availability_zones.available.names, index(local.pvt_subnet_keys, each.key)) # Assign AZ based on map key
+  map_public_ip_on_launch = false                      # Do not assign public IP to instances
+
 
   tags = merge(
     var.common_tags,
