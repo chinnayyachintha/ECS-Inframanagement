@@ -1,29 +1,17 @@
 # Create the main VPC with specified CIDR block and instance tenancy
 resource "aws_vpc" "main" {
-  cidr_block       = var.vpc_cidr_block               # CIDR block for the VPC (e.g., "10.0.0.0/16")
-  instance_tenancy = "default"                         # Default tenancy allows shared hardware (vs dedicated)
+  cidr_block       = var.vpc_cidr_block
+  instance_tenancy = "default"
+
+  enable_dns_support   = true
+  enable_dns_hostnames = true
 
   tags = merge(
     var.common_tags,
-    { Name = "PropStream-VPC" }                        # Naming the VPC for easy identification
+    { Name = "PropStream-VPC" }
   )
 }
 
-# Enable DNS support within the VPC (required for internal DNS resolution)
-resource "aws_vpc_attribute" "dns_support" {
-  vpc_id            = aws_vpc.main.id
-  enable_dns_support = true
-
-  depends_on        = [aws_vpc.main]                   # Ensure VPC exists before enabling this
-}
-
-# Enable DNS hostnames for instances launched in the VPC (required for public DNS names)
-resource "aws_vpc_attribute" "dns_hostnames" {
-  vpc_id               = aws_vpc.main.id
-  enable_dns_hostnames = true
-
-  depends_on           = [aws_vpc.main]                # Depends on VPC creation
-}
 
 # Create public subnets from the var.public_subnets map
 resource "aws_subnet" "public_subnets" {
@@ -64,7 +52,6 @@ resource "aws_internet_gateway" "igw" {
 
 # Allocate an Elastic IP (EIP) for the NAT Gateway
 resource "aws_eip" "nat_eip" {
-  vpc = true                                           # Must be true for use in a VPC
 
   tags = merge(
     var.common_tags,

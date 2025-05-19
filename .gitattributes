@@ -1,0 +1,12 @@
+# Set line endings to LF for all text files
+* text=auto
+
+# Force line endings to be LF for Terraform files
+*.tf text eol=lf
+
+# For Python files, ensure LF line endings
+*.py text eol=lf
+
+# Avoid line-ending modifications for binary files
+*.pem binary
+*.key binary
