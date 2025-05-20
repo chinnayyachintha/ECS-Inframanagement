@@ -43,3 +43,21 @@ output "public_security_group_id" {
 output "private_security_group_id" {
   value = module.security_groups.private_security_group_id
 }
+
+# ECS Task Execution Role Outputs
+output "ecs_task_execution_role_name" {
+  value = module.ecs_task_execution_role.role_name
+}
+
+output "ecs_task_execution_role_arn" {
+  value = module.ecs_task_execution_role.role_arn
+}
+
+# ECS Task Role Outputs
+output "ecs_task_role_name" {
+  value = module.ecs_task_role.role_name
+}
+
+output "ecs_task_role_arn" {
+  value = module.ecs_task_role.role_arn
+}
