@@ -56,3 +56,27 @@ module "ecs_task_role" {
     "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
   ]
 }
+
+module "ecr" {
+  source = "./modules/ecr"
+
+  repository_name               = "my-backend-api"
+  enable_image_scan             = true
+  image_tag_mutability          = "IMMUTABLE"
+  encryption_type               = "AES256"
+  enable_lifecycle_policy       = true
+  attach_repository_policy      = true
+  repository_policy_iam_role_arn = module.ecs_task_execution_role.role_arn
+  
+  depends_on = [
+    module.ecs_task_execution_role
+  ]
+  
+  common_tags = merge(
+    var.common_tags,
+    {
+      "Name" = "my-backend-api"
+    }
+  )
+}
+

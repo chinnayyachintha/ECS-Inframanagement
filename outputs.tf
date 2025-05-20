@@ -61,3 +61,12 @@ output "ecs_task_role_name" {
 output "ecs_task_role_arn" {
   value = module.ecs_task_role.role_arn
 }
+
+# ECR Module Outputs
+output "ecr_repository_url" {
+  value = module.ecr.ecr_repository_url
+}
+
+output "ecr_repository_arn" {
+  value = module.ecr.ecr_repository_arn
+}
