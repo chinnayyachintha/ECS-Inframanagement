@@ -24,3 +24,6 @@ common_tags = {
 # Security Groups Module Configuration Variables
 public_sg_name  = "Public-SG"
 private_sg_name = "Private-SG"
+
+# ECS Cluster Module Configuration Variables
+cluster_name = "my-app-cluster"

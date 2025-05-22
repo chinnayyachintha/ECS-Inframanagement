@@ -80,3 +80,9 @@ module "ecr" {
   )
 }
 
+module "ecs_cluster" {
+  source       = "./modules/ecs_cluster"
+  cluster_name = var.cluster_name
+  common_tags  = var.common_tags
+}
+

@@ -70,3 +70,13 @@ output "ecr_repository_url" {
 output "ecr_repository_arn" {
   value = module.ecr.ecr_repository_arn
 }
+
+output "ecs_cluster_arn" {
+  description = "The ARN of the ECS cluster"
+  value       = module.ecs_cluster.ecs_cluster_arn
+}
+
+output "ecs_cluster_name" {
+  description = "The name of the ECS cluster"
+  value       = module.ecs_cluster.ecs_cluster_name
+}

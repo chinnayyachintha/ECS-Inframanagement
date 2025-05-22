@@ -32,3 +32,9 @@ variable "private_sg_name" {
   description = "Name for the private security group"
   type        = string
 }
+
+# ECS Cluster Module Variables
+variable "cluster_name" {
+  description = "Name for the ECS cluster"
+  type        = string
+}
